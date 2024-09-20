@@ -63,7 +63,7 @@ class Studente {
 
     iscrivi(classe) {
         // Effettuare dei controlli o scrivere codice più complesso
-        if (length(classe) == 3) {
+        if (classe.length == 3) {
             this.classe = classe;
         }
         else {
@@ -78,7 +78,7 @@ s.nome = 'Andrea';
 s.classe = '3Bi';
 
 s.iscrivi('4Bi');
-console.log(s.nomeCompleto());
+console.log(s.nomeCompleto);
 
 var s2 = new Studente(2);
 
@@ -93,10 +93,12 @@ class Classe {
     }
 
     get numeroStudenti() {
-        return this.studenti.length();
+        return this.studenti.length;
     }
 }
 
 cl1 = new Classe('4Bi');
 cl1.aggiungiStudente(new Studente(1));
 cl1.studenti[0].nome = 'Gabriel';
+
+console.log(cl1);
