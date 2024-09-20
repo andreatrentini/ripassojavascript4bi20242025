@@ -100,3 +100,5 @@ class Classe {
 cl1 = new Classe('4Bi');
 cl1.aggiungiStudente(new Studente(1));
 cl1.studenti[0].nome = 'Gabriel';
+
+s2 = new Studente(3);
