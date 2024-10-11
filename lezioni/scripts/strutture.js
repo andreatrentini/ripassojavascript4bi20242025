@@ -17,7 +17,19 @@ var colori = ['Rosso', 'Verde', 'Blu', 'Arancio'];
 
 var indice = 0;
 
-while (colori[indice] != ' Verde' && indice < colori.length) {
+while (colori[indice] != 'Verde' && indice < colori.length) {
     console.log(colori[indice]);
     indice++;
 }
+
+for(let i = 0; i < colori.length; i++) {
+    console.log(colori[i]);
+}
+
+colori.forEach(function(colore) {
+    console.log(colore);
+})
+
+colori.forEach(colore => {
+    console.log(colore);
+})
