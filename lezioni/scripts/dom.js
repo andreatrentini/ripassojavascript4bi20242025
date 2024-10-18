@@ -53,3 +53,36 @@ for (let i = 0; i < paragrafi.length; i++) {
     const element = paragrafi[i];
     element.innerText = i; 
 }
+
+// Modificare la struttura del DOM: aggiungere o rimuovere elementi dalla pagina
+
+// 1. identificare l'elemento nel quale o rispetto al quale 
+// aggiungere nuovi elementi
+
+var permodificastruttura = document.getElementById('permodificastruttura');
+
+var colori = ['Red', 'Green', 'Blue'];
+
+// Creo un nuovo elemento html
+
+var elencoPuntato = document.createElement('ul');
+
+// ATTENZIONE: il tag ul, con questa operazione, NON viene visualizzato
+// nella pagina. Esiste solo come elemento javascript.
+
+colori.forEach(colore => {
+    // Creo un nuovo oggetto HTML di tipo li (list item)
+    let elementoElenco = document.createElement('li');
+    // Modifico gli attributi o il contenuto del nuovo nodo
+    elementoElenco.innerText = colore;
+    // Aggiungo il nuovo nodo (tag) al suo parent
+    elencoPuntato.appendChild(elementoElenco);
+});
+
+// Aggiungo il nuovo nodo (tag) al suo parent
+permodificastruttura.appendChild(elencoPuntato);
+
+// Esistono vari metodi per modificare il DOM
+// Alcuni esempi:
+// permodificastruttura.insertBefore()
+// permodificastruttura.removeChild()
