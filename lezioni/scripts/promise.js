@@ -23,10 +23,10 @@ function fetchDataFromServer1() {
     })
 }
 
-fetchDataFromServer1()
+/* fetchDataFromServer1()
     .then(datiRicevuti => {
         console.log('Dati ricevuti: ', datiRicevuti);
-    });
+    }); */
 
 function fetchDataFromServer2() {
     // Restituisco NON i dati ma la promessa che si cercherà di ottenere i dati (la richiesta potrebbe fallire...)
@@ -60,7 +60,7 @@ function fetchDataFromServer2() {
     })
 }
 
-fetchDataFromServer2()
+/* fetchDataFromServer2()
     // .then -> funzione di callback da eseguire in caso di successo
     .then(datiRicevuti => {
         console.log('Dati ricevuti: ', datiRicevuti);
@@ -72,4 +72,91 @@ fetchDataFromServer2()
     // .finally -> funzione da eseguire al termine delle funzioni sia di successo che di insuccesso.
     .finally(() => {
         console.log('Operazione terminata.')
+    }) */
+
+function getUser() {
+    // La funzione getUser restituisce id e username di un utente. La Promise ha l'80% di probabilità di essere 
+    // risolta correttamente.
+    return new Promise((resolve, reject) => {
+        // Simulo uno promise che ha il 80% di probabilità di avere successo
+        setTimeout(() => {
+            let success = Math.random() > 0.2;
+            console.log('getUser success: ', success);
+            if (success) {
+                resolve({
+                    id: 1,
+                    username: 'andrea'
+                });
+            }
+            else {
+                reject('Errore nel recupero dei dati dell\'utente');
+            }
+        }, 2000);
     })
+}
+
+function getUserDetails(userId) {
+    // La funzione getUserDetails restituisce il dettaglio di un utente cercandolo in un database usando id come chiave
+    // di ricerca. La Promise ha l'80% di probabilità di essere risolta correttamente. 
+    // La funzione è una simulazione del processo. Importante notare che il recupero dei dettagli è possibile solo
+    // se l'id dell'utente è conosciuto.
+    return new Promise((resolve, reject) => {
+        setTimeout(() => {
+            let success = Math.random() > 0.2;
+            console.log('getUserDetails success: ', success);
+            if (success) {
+                resolve({
+                    id: userId,
+                    name: 'Andrea',
+                    surname: 'Trentini',
+                    grades: [7, 6, 8]
+                })
+            }
+            else {
+                reject('Errore nel recupero dei dati di dettaglio dell\'utente');
+            }
+        }, 2000)
+    })
+}
+
+function addGradeToUser(grades, grade) {
+    // La funzione addGradeToUser aggiunge un voto all'utente. Per poterlo fare deve disporre dell'elenco dei voti 
+    // precedentemente recuperato..
+    // La funzione ha un 20% di probabilità di avere successo.
+    
+    return new Promise((resolve, reject) => {
+        setTimeout(() => {
+            let success = Math.random() > 0.8;
+            console.log('addGradeToUser success: ', success);
+            if (success) {
+                // Scrivere del codice per aggiornare i dati del nostro user su database
+                grades.push(grade);
+                resolve({
+                    id: userId,
+                    nome: 'Andrea',
+                    cognome: 'Trentini',
+                    grades
+                })
+            }
+            else {
+                reject('Errore durante l\'aggiornamento dei dati.');
+            }
+        }, 2500)
+    });
+}
+
+getUser() 
+    .then(user => {
+        console.log('getUser: ', user);
+        return getUserDetails(user.id);
+    })
+    .then(details => {
+        console.log('getDetails: ', details);
+        return addGradeToUser(details.grades, 10);
+    })
+    .then(newDetails => {
+        console.log('addUserGrade:', newDetails);
+    })
+    .catch(error => {
+        console.log(error);
+    } )
