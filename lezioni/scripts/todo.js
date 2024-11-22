@@ -11,6 +11,7 @@ class Todo {
 class Todos {
     constructor() {
         this.todos = [];
+        this.seedId = 1;
     }
 
     salvaLS() {
@@ -36,19 +37,91 @@ class Todos {
         localStorage.removeItem('todos');
     }
 
-    aggiungi(todo) {
-        this.todos.push(todo);
+    aggiungi(data, categoria, descrizione) {         
+        let newTodo = new Todo(this.seedId, data, categoria, descrizione);
+        this.todos.push(newTodo);
+        this.seedId++;
     }
 
     elimina(indice) {
-
+        this.todos.splice(indice, 1);
     }
 
     modifica(indice, nuovo) {
+        // Soluzione 1 per il controllo dell'errore
+        try {
+            this.todos[indice] = nuovo;
+        }
+        catch { }
 
-    }
+        // Soluzione 2: controllo che i dati siano corretti
+/*         if (indice >= 0 && indice < this.todos.length) {
+            this.todos[indice] = nuovo;
+        }
+ */    }
 
     completa(indice) {
-        
+        try {
+            this.todos[indice].completato = true;
+        }
+        catch {}
+    }
+
+    createHTMLTable() {
+        // 1. ottengo il tag div nel quale inserire la tabella e lo svuoto
+        let div = document.getElementById('tabella-dati');
+        div.innerHTML = '';
+        // 2. Creo la tabella
+        let table = document.createElement('table');
+        table.className = 'table table-striped';
+        // 3. Creo la header
+        let tableHead = document.createElement('thead');
+        tableHead.innerHTML = `<tr><th scope="col">Id</th><th scope="col">Data</th><th scope="col">
+                                Categoria</th><th scope="col">Descrizione</th><th scope="col">Completato</th></tr>`;
+        // 4. Aggiungo la header alla tabella
+        table.appendChild(tableHead);
+
+        // 5. Creo il tbody
+        let tbody = document.createElement('tbody');
+        this.todos.forEach(todo => {
+            // Creo una nuova riga
+            let row = document.createElement('tr');
+            row.innerHTML = `<tr><th scope="row">${todo.id}</th><td>${todo.data}</td><td>${todo.categoria}</td>
+                             <td>${todo.descrizione}</td><td>${todo.completato}</td></tr>`;
+            // 6. aggiungo la nuova riga a tbody
+            tbody.appendChild(row);
+        });
+        // 7. Aggiungo tbody alla tabella
+        table.appendChild(tbody);
+
+        // 8. Aggiungo la tabella al div
+        div.appendChild(table);
+
     }
 }
+
+function aggiungiTodo() {
+    // 1. recupero i valori inseriti nelle input
+    let dataInput = document.getElementById('data');
+    let categoriaInput = document.getElementById('categoria');
+    let descrizioneInput = document.getElementById('descrizione');
+    
+    // 2. Aggiungo a todos il nuovo elemento
+    todos.aggiungi(dataInput.value, categoriaInput.value, descrizioneInput.value);
+    
+    // 3. Svuoto le input
+    dataInput.value = '';
+    categoriaInput.value = '';
+    descrizioneInput.value = '';
+    
+    todos.createHTMLTable();
+}
+
+// Codice da eseguire al caricamento della pagina
+
+var todos = new Todos();
+
+document.addEventListener("DOMContentLoaded", () => {
+    todos.caricaLS();
+    todos.createHTMLTable();
+})
