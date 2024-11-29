@@ -18,7 +18,12 @@ class Todos {
         // localStorage è una classe che ci consente di accedere al local storage del browser
         // setItem consente di memorizzare un valore di tipo string nel localStorage e di associare a quel valore
         // una chiave che lo identifica
-        localStorage.setItem('todos', JSON.stringify(this.todos));
+        let datiDaSalvare = {            
+            seedId: this.seedId,
+            todos: this.todos
+        };
+
+        localStorage.setItem('todos', JSON.stringify(datiDaSalvare));
     } 
 
     caricaLS() {
@@ -29,7 +34,10 @@ class Todos {
         // Se non presenti getItem restituisce null
         if(tmp) {
             // I dati erano presenti, la funzione parse della libreria JSON converto dati json in un formato javascript
-            this.todos = JSON.parse(tmp);
+            let datiCaricati = JSON.parse(tmp);
+            console.log(datiCaricati)
+            this.seedId = datiCaricati.seedId;
+            this.todos = datiCaricati.todos;
         }
     }
 
@@ -117,6 +125,11 @@ function aggiungiTodo() {
     todos.createHTMLTable();
 }
 
+function azzeraLS() {
+    localStorage.clear();
+    todos = new Todos();
+}
+
 // Codice da eseguire al caricamento della pagina
 
 var todos = new Todos();
@@ -124,4 +137,8 @@ var todos = new Todos();
 document.addEventListener("DOMContentLoaded", () => {
     todos.caricaLS();
     todos.createHTMLTable();
+});
+
+window.addEventListener('beforeunload', () => {
+    todos.salvaLS();
 })
