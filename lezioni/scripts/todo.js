@@ -128,6 +128,7 @@ function aggiungiTodo() {
 function azzeraLS() {
     localStorage.clear();
     todos = new Todos();
+    todos.createHTMLTable();
 }
 
 // Codice da eseguire al caricamento della pagina
