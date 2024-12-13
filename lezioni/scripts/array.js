@@ -80,6 +80,18 @@ function statistiche() {
     const country_code_singoli = new Set(country_code);
     console.log(country_code_singoli);
 
+    const statistiche = dati.reduce((result, aeroporto) => {
+        if(result[aeroporto.country_code]) {
+            result[aeroporto.country_code]++;
+        }
+        else {
+            result[aeroporto.country_code] = 1;
+        }
+        return result;
+    }, {})
+
+    console.log(statistiche);
+
 }
 
 getAeroporti();
