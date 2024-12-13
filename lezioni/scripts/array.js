@@ -78,7 +78,7 @@ function statistiche() {
     const country_code = dati.map(aeroporto => aeroporto.country_code);
     console.log(country_code);
     const country_code_singoli = new Set(country_code);
-    console.log(country_code_singoli);
+        console.log(country_code_array);
 
     const statistiche = dati.reduce((result, aeroporto) => {
         if(result[aeroporto.country_code]) {
